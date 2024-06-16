@@ -50,23 +50,24 @@
                     </div>
                                      
                     @else
-                        <form class="form" action="" method="POST" enctype="multipart/form-data">
+                        <form class="form" action="{{route('applications.store')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <p class=" fs-3 text-center">Ariza yuborish formasi</p>
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">Subject</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" name="subject" placeholder="name@example.com">
+                            <input type="text" class="form-control" id="exampleFormControlInput1" name="subject" >
                         </div>
                         <div class="mb-3">
                             <label for="exampleFormControlTextarea1" class="form-label">Message</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" name="message" rows="5"></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="formFile" class="form-label">file yuklang</label>
-                            <input class="form-control" type="file" id="formFile">
+                            <input class="form-control" type="file" name="file" id="formFile">
                           </div>
                           <div class="d-grid">
-                            <button class="btn btn-primary" type="submit">Yuborish</button>
+                            {{-- <button class="btn btn-primary" type="submit">Yuborish</button> --}}
+                            <input class="btn btn-primary" type="submit" value="Yuborish" >
                           </div>
                           
                         </form>
