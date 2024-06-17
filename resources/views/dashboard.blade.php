@@ -23,17 +23,50 @@
                         @foreach ($applications as $application)
                         <div class="col">
                             <div class="card h-100">
-                              <div class="card-body">
-                                  <p class="fs-3">{{$application->user->name}}</p>
-                                  <samp > {{$application->user->email}}</samp>
-                                  <hr class="border border-danger border-2 opacity-50 mb-2 mt-1">
-                                <h5 class="card-title fs-2 ">{{$application->subject}}</h5>
-                                <p class="card-text mb-4">{{$application->message}}</p>
+                               
+                                    <div class="card-body">
+                                        <p class="fs-3">{{$application->user->name}}</p>
+                                        <samp > {{$application->user->email}}</samp>
+                                        <hr class="border border-danger border-2 opacity-50 mb-2 mt-1"> 
+                                    <div class="flex justify-between">
+                                        <div>
+                                            <h5 class="card-title fs-2 ">{{$application->subject}}</h5>
+                                            <p class="card-text mb-4">{{$application->message}}</p>
+                                        </div>
+                                        <div class="">
+                                            @if ($application->file_url==null)
+                                               <div class="flex m-6 p-6 cursor-pointer hover:bg-gray-50 transition">
+                                                No file
+                                                </div> 
+                                            @else
+                                                <a href="{{asset('storage/images/'.$application->file_url)}}" target="_blank" class="flex m-6 p-6 cursor-pointer hover:bg-gray-50 transition ">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                                                    </svg>
+                                                </a>
+                                            @endif
+                                            
+                                            
+                                         </div>
+                                    
+                                    </div>
+                                </div>
+                              
+                              <div class="card-footer flex justify-between">
+                                <div>
+                                    <small class="text-body-secondary">{{$application->created_at}}</small>
+                                    <p class="btn btn-outline-primary">id: {{$application->id}}</p>
+                                </div>
+                                 <div class="flex">
+                                    <div>
+                                        <a href="{{route('applications.show',['application' => $application->id])}}" class="btn btn-outline-primary">Yuborilganlar javoblar</a>
+                                        <a href="answers/create/{{$application->id}}" class="btn btn-outline-success">Javob berish</a>
+                                        <a href="{{route('applications.destroy',$application->id)}}" class="btn btn-outline-danger">O'chirish</a>
+                                    </div>
+                                   
+                                 </div>
                               </div>
-                              <div class="card-footer">
-                                  <small class="text-body-secondary">{{$application->created_at}}</small>
-                                  <p class="btn btn-outline-primary">id: {{$application->id}}</p>
-                              </div>
+
                             </div>
                           </div>
                         @endforeach
@@ -44,6 +77,15 @@
                     </div>
                                      
                     @else
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                             @if(session('error'))
                                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                     {{ session('error') }}
@@ -65,11 +107,11 @@
                             <p class=" fs-3 text-center">Ariza yuborish formasi</p>
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">Subject</label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" name="subject" >
+                            <input type="text" class="form-control" id="exampleFormControlInput1" name="subject" required >
                         </div>
                         <div class="mb-3">
                             <label for="exampleFormControlTextarea1" class="form-label">Message</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" name="message" rows="5"></textarea>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" name="message" rows="5" required></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="formFile" class="form-label">file yuklang</label>

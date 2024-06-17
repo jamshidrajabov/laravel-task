@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ApplicationRequest;
 use App\Jobs\SendMail;
+use App\Models\Answer;
 use App\Models\application;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -28,18 +30,13 @@ class ApplicationController extends Controller
     {
         
     }
-    public function store(Request $request)
+    public function store(ApplicationRequest $request)
     {
         $user = Auth::user();
 
        
         
-        $validatedData = $request->validate([
-            'subject' => 'required|max:255',
-            'message' => 'required',
-            'file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            
-        ]);
+        $validatedData = $request->validated();
 
         if ($request->hasFile('file')) {
             $originalName = $request->file('file')->getClientOriginalName();
@@ -59,9 +56,19 @@ class ApplicationController extends Controller
         return redirect()->back()->with('success','Ariza muvaffaqqiyatli yuborildi');
  
     }
-    public function show()
+    public function show($id)
     {
-
+        $application = application::find($id);
+        // $answers = Answer::whereColumn('application_id', $id)->get();
+       
+        $answers=$application->answers()->get();
+        $count = $answers->count();
+    
+        return view('answer.show',[
+            'application' => $application,
+            'answers' => $answers,
+            'count' => $count
+        ]);
     }
     public function edit()
     {

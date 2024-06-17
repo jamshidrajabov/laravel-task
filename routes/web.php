@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProfileController;
@@ -29,7 +30,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('applications',ApplicationController::class);
+Route::resource('applications', ApplicationController::class);
+Route::get('answers/create/{id}', [AnswerController::class,'create'])->name('answer.create');
+Route::post('answers/store/{id}', [AnswerController::class,'store'])->name('answer.store');
 
 Route::post('/submit-application', 'ApplicationController@submit')->middleware('check.application.date');
 
