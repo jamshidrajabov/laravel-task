@@ -17,36 +17,27 @@
                     @if (auth()->user()->role_id==1)
                     <p class="fs-3 text-center">Kelib tushgan arizalar</p>
                     <div class="row row-cols-1 row-cols-md-1 g-4 mt-1">
+                        @foreach ($applications as $application)
                         <div class="col">
                             <div class="card h-100">
                               <div class="card-body">
-                                  <p class="fs-3">Jamshid</p>
-                                  <samp > manager@gmail.com</samp>
+                                  <p class="fs-3">{{$application->user->name}}</p>
+                                  <samp > {{$application->user->email}}</samp>
                                   <hr class="border border-danger border-2 opacity-50 mb-2 mt-1">
-                                <h5 class="card-title fs-2 ">Card title</h5>
-                                <p class="card-text mb-4">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                <h5 class="card-title fs-2 ">{{$application->subject}}</h5>
+                                <p class="card-text mb-4">{{$application->message}}</p>
                               </div>
                               <div class="card-footer">
-                                  <small class="text-body-secondary">2024-06-15 15:15:15</small>
-                                  <p class="btn btn-outline-primary">id: 15</p>
+                                  <small class="text-body-secondary">{{$application->created_at}}</small>
+                                  <p class="btn btn-outline-primary">id: {{$application->id}}</p>
                               </div>
                             </div>
                           </div>
-                          <div class="col">
-                            <div class="card h-100">
-                              <div class="card-body">
-                                  <p class="fs-3">Jamshid</p>
-                                  <samp > manager@gmail.com</samp>
-                                  <hr class="border border-danger border-2 opacity-50 mb-2 mt-1">
-                                <h5 class="card-title fs-2 ">Card title</h5>
-                                <p class="card-text mb-4">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                              </div>
-                              <div class="card-footer">
-                                  <small class="text-body-secondary">2024-06-15 15:15:15</small>
-                                  <p class="btn btn-outline-primary">id: 15</p>
-                              </div>
-                            </div>
-                          </div>
+                        @endforeach
+                        
+                        {{ $applications->links() }}
+
+                          
                     </div>
                                      
                     @else

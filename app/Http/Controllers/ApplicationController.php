@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendMail;
 use App\Models\application;
+use App\Models\User;
 use Illuminate\Http\Request;
 
+use App\Mail\ApplicationCreated;
 class ApplicationController extends Controller
 {
     public function index()
@@ -36,9 +39,10 @@ class ApplicationController extends Controller
             'user_id' => auth()->user()->id,
             'file_url' => $imageName ?? null
         ]);
-        return redirect('/');
+
+        SendMail::dispatch($application);
+        return redirect()->back();
  
-     
     }
     public function show()
     {
