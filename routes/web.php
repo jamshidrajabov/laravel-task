@@ -30,4 +30,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('applications',ApplicationController::class);
+
+Route::post('/submit-application', 'ApplicationController@submit')->middleware('check.application.date');
+
 require __DIR__.'/auth.php';
