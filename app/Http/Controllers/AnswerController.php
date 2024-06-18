@@ -6,6 +6,7 @@ use App\Jobs\AnswerToUser;
 use App\Models\Answer;
 use App\Models\application;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 
 class AnswerController extends Controller
@@ -21,6 +22,12 @@ class AnswerController extends Controller
     }
     public function create(application $id)
     {
+        // if (! Gate::allows('answer.create', auth()->user())) {
+        //     abort(403);
+        // }
+        if (auth()->user()->cannot('create', Answer::class)) {
+            abort(403);
+        }
         $this->application_id=$id;
         return view('answer.create',[
              'application' => $id,
@@ -28,6 +35,13 @@ class AnswerController extends Controller
     }
     public function store(Request $request,$id)
     {
+        // if (! Gate::allows('answer.store', auth()->user())) {
+        //     abort(403);
+        // }
+        if (auth()->user()->cannot('create', Answer::class)) {
+            abort(403);
+        }
+
         $answer = new Answer();
         $answer->application_id = $id;
         $answer->answer = $request->input('answer');

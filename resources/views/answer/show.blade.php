@@ -54,7 +54,12 @@
 
                         </div>
                         <div class="text-center fs-5 m-3">
+                            @if (auth()->user()->role->name=='manager')
                             <a class="btn btn-danger mt-2" href="/">Orqaga</a>
+                            @else
+                            <a class="btn btn-danger mt-2" href="/applications">Orqaga</a>
+                            @endif
+                            
                             <div class="m-4">
                             Yuborilgan Javoblar: {{$count}} ta javob mavjud:
                             </div>

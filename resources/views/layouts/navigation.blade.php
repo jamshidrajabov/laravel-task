@@ -16,6 +16,11 @@
                         {{ __('Bosh sahifa') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('applications.index')" :active="request()->routeIs('applications.index')">
+                        {{ __('Mening arizalarim') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->

@@ -24,7 +24,12 @@ class ApplicationController extends Controller
     }
     public function index()
     {
-
+       
+        $applications = auth()->user()->applications()->latest()->paginate(3);
+        
+        return view('applications.myapplications',[
+            'applications' => $applications
+        ]);
     }
     public function create()
     {
@@ -38,7 +43,8 @@ class ApplicationController extends Controller
         
         $validatedData = $request->validated();
 
-        if ($request->hasFile('file')) {
+        if ($request->hasFile('file')) 
+        {
             $originalName = $request->file('file')->getClientOriginalName();
             $imageName =(string)round(microtime(true) * 1000) . '.' . (string)$request->ip().'_'.(string)$originalName;
             $request->file->storeAs('images', $imageName,'public');
@@ -58,9 +64,12 @@ class ApplicationController extends Controller
     }
     public function show($id)
     {
+
         $application = application::find($id);
         // $answers = Answer::whereColumn('application_id', $id)->get();
-       
+        if (!$application) {
+            abort(404, 'Ma\'lumot topilmadi');
+        }
         $answers=$application->answers()->get();
         $count = $answers->count();
     
@@ -70,6 +79,7 @@ class ApplicationController extends Controller
             'count' => $count
         ]);
     }
+    
     public function edit()
     {
 
