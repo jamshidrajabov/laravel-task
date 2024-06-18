@@ -38,3 +38,12 @@ Dastur ishga tushirilganda
 php artisan queue:listen
 ```
 buyrug'i bajarilishi kerak. 
+
+## O'rganilgan mavzular
+- Auth - authentication
+- Role 2: mijoz, menejer
+- Authorization - permissions
+- CRUD
+- Form, file upload
+- Email
+- Queue, Job
